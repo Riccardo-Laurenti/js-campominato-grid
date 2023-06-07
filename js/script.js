@@ -35,4 +35,80 @@ Le validazioni e i controlli possiamo farli anche in un secondo momento.
 
 
 
+// Prendo elementi dal dom
+const btnPlayed = document.querySelector('.play');
+const difficult = document.getElementById('difficult');
+const flexGrid = document.querySelector('.flex-grid');
+
+btnPlayed.addEventListener('click', () => {
+        // reset content
+        flexGrid.innerHTML = '';
+
+        
+        const gridDimension = difficult.value;
+        let cellsNumber;
+        let cellsPerSide;
+
+        switch (gridDimension) {
+            case '1':
+                cellsNumber = 100;
+                cellsPerSide = 10;
+                break;
+            case '2':
+                cellsNumber = 81;
+                cellsPerSide = 9;
+                break;
+            case '3':
+                cellsNumber = 49;
+                cellsPerSide = 7;
+        }
+
+        
+        const grid = document.createElement('div');
+        grid.classList.add('grid');
+
+        //  ciclo for
+        for (let i = 1; i <= cellsNumber; i++) {
+            
+            const square = createGridSquare (i, cellsPerSide);
+
+            square.addEventListener('click', 
+                function () {
+                    this.classList.add('clicked');
+                }
+            );
+                        
+            
+            grid.append(square);
+        }
+
+         
+         flexGrid.append(grid);
+    }
+);
+
+/*
+    ----- FUNZIONE --------
+*/
+
+
+function createGridSquare (num, cells) {
+    //creo nodo square
+    const node = document.createElement('div');
+    node.classList.add('square');
+    node.style.width = `calc(100% / ${cells})`;
+    node.style.height = `calc(100% / ${cells})`;
+
+    // Nodo span text
+    const span = document.createElement('span');
+    span.append(num);
+
+    //aggiungo a square il contenuto span
+    node.append(span);
+
+    return node;
+}
+
+
+
 
